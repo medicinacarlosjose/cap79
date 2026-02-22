@@ -1,0 +1,23 @@
+{
+  "name": "CAPITAL 79 — Ultra Wealth Management",
+  "short_name": "CAP79",
+  "description": "Ultra Wealth Management",
+  "start_url": "/cap79/",
+  "scope": "/cap79/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#3b0000",
+  "theme_color": "#d4af37",
+  "icons": [
+    {
+      "src": "/cap79/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/cap79/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
