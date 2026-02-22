@@ -1,0 +1,354 @@
+:root {
+  --royal-red-1:#3b0000;
+  --royal-red-2:#5e0000;
+  --royal-red-3:#7a0000;
+
+  --gold-main:#d4af37;
+  --gold-soft:#f7e7a9;
+  --gold-glow:rgba(212,175,55,0.45);
+
+  --light-bg:#f4efe6;
+  --light-card:#ffffff;
+  --light-gold:#c6a54a;
+}
+
+/* BASE */
+body{
+  margin:0;
+  font-family:"Segoe UI",sans-serif;
+  background:linear-gradient(145deg,var(--royal-red-1),var(--royal-red-2),var(--royal-red-3));
+  color:#fff;
+  transition:0.4s;
+}
+
+body.light{
+  background:linear-gradient(145deg,#f4efe6,#ebe2d2,#e2d6c3);
+  color:#222;
+}
+
+/* PIN BLOQUEIO TOTAL */
+#pinLock{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+
+  background:
+    radial-gradient(circle at 20% 30%, #0b1635 0%, #050b1a 40%, #000000 80%);
+}
+
+/* Fundo animado fica atrás */
+#pinLock::before,
+#pinLock::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0; /* 👈 IMPORTANTE */
+}
+
+/* Caixa do PIN fica acima */
+#pinLock .modal-content{
+  position:relative;
+  z-index:10; /* 👈 ESSENCIAL */
+}
+
+#pinLock input{
+  width:180px;
+  font-size:24px;
+  letter-spacing:8px;
+
+  background:transparent;
+  border:none;
+  border-bottom:2px solid #d4af37;
+
+  color:#fff;
+  text-align:center;
+  outline:none;
+
+  padding:10px 0;
+
+  transition:0.3s;
+}
+
+#pinLock input:focus{
+  border-bottom:2px solid #ffd700;
+  box-shadow:0 8px 20px rgba(255,215,0,0.2);
+}
+
+/* TOPO */
+.top-bar{
+  padding:30px 35px 15px 35px; /* reduzido */
+}
+
+/* RECEITA – INPUT LUXURY */
+#totalIncome{
+  background:transparent;
+  border:none;
+  border-bottom:1px solid var(--gold-main);
+  font-size:18px; /* reduzido */
+  color:var(--gold-main);
+  width:110px; /* reduzido */
+  outline:none;
+}
+
+body.light #totalIncome{
+  border-bottom:1px solid var(--light-gold);
+  color:var(--light-gold);
+}
+
+/* MÉTRICAS */
+.summary{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px; /* reduzido */
+  margin-top:15px; /* reduzido */
+  align-items:center;
+}
+
+.metric-label{
+  font-size:10px; /* reduzido */
+  opacity:0.6;
+}
+
+.metric-value{
+  font-size:18px; /* reduzido */
+  font-weight:bold;
+}
+
+/* BOTÕES PADRÃO PREMIUM */
+.btn-minimal{
+  background:transparent;
+  border:1px solid var(--gold-main);
+  color:var(--gold-main);
+  padding:6px 16px; /* reduzido */
+  border-radius:22px; /* levemente menor */
+  cursor:pointer;
+  font-size:12px; /* reduzido */
+  transition:0.3s;
+}
+
+.btn-minimal:hover{
+  background:var(--gold-main);
+  color:#000;
+}
+
+body.light .btn-minimal{
+  border:1px solid var(--light-gold);
+  color:var(--light-gold);
+}
+
+/* MESES */
+main{
+  padding:25px 35px; /* reduzido */
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); /* reduzido */
+  gap:22px; /* reduzido */
+}
+
+.month-card{
+  background:rgba(0,0,0,0.92);
+  padding:18px; /* reduzido */
+  border-radius:16px; /* reduzido */
+  border:1px solid rgba(212,175,55,0.15);
+  transition:0.4s;
+}
+
+body.light .month-card{
+  background:var(--light-card);
+  border:1px solid var(--light-gold);
+}
+
+.month-card:hover{
+  transform:translateY(-4px); /* levemente reduzido */
+  border-color:var(--gold-main);
+  box-shadow:
+    0 0 20px var(--gold-glow),
+    0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* RODAPÉ */
+.footer-controls{
+  text-align:center;
+  margin:40px 0 50px 0; /* reduzido */
+  opacity:0.8;
+}
+
+.footer-controls button{
+  margin:0 8px; /* reduzido */
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal.hidden{display:none;}
+
+.modal-content{
+  background:#140000;
+  padding:25px; /* reduzido */
+  border-radius:16px; /* reduzido */
+  width:320px; /* reduzido */
+}
+
+body.light .modal-content{
+  background:#fff;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* ================= TEMAS PREMIUM ================= */
+
+/* DARK (padrão) */
+body.dark{
+  background:linear-gradient(180deg,#6b0000,#1a0000);
+}
+
+/* LIGHT */
+body.light{
+  background:linear-gradient(180deg,#f5efe2,#ffffff);
+  color:#000;
+}
+
+body.bordeaux{
+  background: radial-gradient(circle at top, #3b0a16, #000000 70%);
+  color:#f5d0c5;
+}
+
+body.bordeaux .month-card{
+  background:linear-gradient(180deg,#1a0008,#0d0004);
+  border:1px solid rgba(128,0,32,0.6);
+  box-shadow:0 0 20px rgba(128,0,32,0.2);
+}
+
+body.execemerald{
+  background: radial-gradient(circle at top, #062d20, #000000 70%);
+  color:#b8ffe2;
+}
+
+body.execemerald .month-card{
+  background:linear-gradient(180deg,#031810,#010c08);
+  border:1px solid rgba(0,150,90,0.6);
+  box-shadow:0 0 20px rgba(0,150,90,0.2);
+}
+
+body.titanium{
+  background: radial-gradient(circle at top, #2a2f35, #000000 70%);
+  color:#d9dee3;
+}
+
+body.titanium .month-card{
+  background:linear-gradient(180deg,#14171b,#0b0d10);
+  border:1px solid rgba(180,180,180,0.4);
+  box-shadow:0 0 20px rgba(255,255,255,0.05);
+}
+
+/* ================= TEMA PARISIAN PREMIUM ================= */
+
+body.parisian{
+  background: radial-gradient(circle at top, #0a1426 0%, #000000 75%);
+  color:#f5d7a1;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Marca d'água sofisticada */
+body.parisian::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+
+  background:
+    url("data:image/svg+xml;utf8,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 600'>
+      <path d='M150 20 L170 100 L200 250 L230 450 L240 550 L60 550 L70 450 L100 250 L130 100 Z'
+            fill='white' opacity='0.08'/>
+    </svg>") no-repeat bottom right,
+    url(\"data:image/svg+xml;utf8,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+      <path d='M100 10 L115 70 L160 70 L125 100 L140 160 L100 125 L60 160 L75 100 L40 70 L85 70 Z'
+            fill='white' opacity='0.05'/>
+    </svg>\") no-repeat top left;
+
+  background-size:350px, 180px;
+  mix-blend-mode:overlay;
+}
+
+/* ===== FOTO PIN PREMIUM ===== */
+.pin-photo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:25px;
+
+  border:2px solid rgba(212,175,55,0.7);
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,0.6),
+    0 0 40px rgba(212,175,55,0.4);
+
+  animation:luxGlow 3s ease-in-out infinite;
+}
+
+@keyframes luxGlow{
+  0%,100%{
+    box-shadow:
+      0 0 20px rgba(212,175,55,0.6),
+      0 0 40px rgba(212,175,55,0.4);
+  }
+  50%{
+    box-shadow:
+      0 0 30px rgba(255,215,0,0.9),
+      0 0 60px rgba(255,215,0,0.5);
+  }
+
+/* ===================================== */
+/* BORDA NEON AZUL-OCEANO REAL FUNCIONANDO */
+/* ===================================== */
+
+#pinLock .modal-content{
+
+  width:420px;
+  padding:45px;
+  border-radius:22px;
+
+  background:#1a0000;
+
+  border:3px solid #00f0ff;
+
+  box-shadow:
+    0 0 20px #00f0ff,
+    0 0 40px #0077ff,
+    0 0 80px rgba(0,140,255,0.6);
+
+  animation:neonPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse{
+  from{
+    box-shadow:
+      0 0 10px #00f0ff,
+      0 0 25px #0077ff,
+      0 0 50px rgba(0,140,255,0.5);
+  }
+  to{
+    box-shadow:
+      0 0 25px #00f0ff,
+      0 0 60px #0077ff,
+      0 0 100px rgba(0,140,255,0.8);
+  }
+}

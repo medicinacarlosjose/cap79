@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>CAPITAL 79 — Ultra Wealth Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="app.css">
+
+<style>
+
+/* ===== TÍTULO ANIMADO SOFISTICADO ===== */
+.app-title{
+  font-weight:900;
+  letter-spacing:3px;
+  display:inline-block;
+  position:relative;
+
+  /* Base dourada reluzente */
+  background:
+    linear-gradient(
+      90deg,
+      #b8860b 0%,
+      #ffd700 20%,
+      #ffffff 40%,
+      #ffd700 60%,
+      #b8860b 80%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.2) 0%,
+      rgba(255,255,255,0.6) 50%,
+      rgba(255,255,255,0.2) 100%
+    );
+
+  background-size:200% 100%, 200% 100%;
+  background-position:0% 0%, -150% 0%;
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:
+    goldPulse 6s ease-in-out infinite,
+    lightSweep 3.5s linear infinite;
+
+  text-shadow:
+    0 0 6px rgba(255,215,0,0.8),
+    0 0 14px rgba(255,215,0,0.6),
+    0 0 28px rgba(212,175,55,0.5);
+}
+
+/* brilho dourado respirando */
+@keyframes goldPulse{
+  0%,100%{
+    filter:brightness(1);
+  }
+  50%{
+    filter:brightness(1.3);
+  }
+}
+
+/* faixa branca passando dentro do texto */
+@keyframes lightSweep{
+  0%{
+    background-position:0% 0%, -150% 0%;
+  }
+  100%{
+    background-position:0% 0%, 150% 0%;
+  }
+}
+
+/* ===== FUNDO VIVO PREMIUM ===== */
+
+#pinLock{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+
+  background:
+    radial-gradient(circle at 20% 30%, #0b1635 0%, #050b1a 40%, #000000 80%);
+}
+
+/* Camada de estrelas */
+#pinLock::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 10% 20%, rgba(212,175,55,0.7) 1px, transparent 2px),
+    radial-gradient(circle at 80% 40%, rgba(212,175,55,0.5) 1px, transparent 2px),
+    radial-gradient(circle at 50% 80%, rgba(212,175,55,0.6) 1px, transparent 2px),
+    radial-gradient(circle at 30% 60%, rgba(255,215,0,0.4) 1px, transparent 2px),
+    radial-gradient(circle at 70% 10%, rgba(212,175,55,0.5) 1px, transparent 2px);
+
+  background-size: 400px 400px;
+  animation: starDrift 10s linear infinite;
+  opacity:0.6;
+}
+
+/* Glow sutil no centro */
+#pinLock::after{
+  content:"";
+  position:absolute;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+/* Movimento lento das partículas */
+@keyframes starDrift{
+  from{
+    background-position:0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  to{
+    background-position:400px 400px, -400px 300px, 300px -400px, -300px 200px, 200px -300px;
+  }
+}
+
+/* Respiração do brilho central */
+@keyframes pulseGlow{
+  0%,100%{
+    transform:scale(1);
+    opacity:0.6;
+  }
+  50%{
+    transform:scale(1.1);
+    opacity:1;
+  }
+}
+
+/* ===== FOOTER RESPONSIVO FIXO ===== */
+.footer-controls{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  padding:20px 10px;
+  text-align:center;
+}
+
+.footer-controls .btn-minimal{
+  flex:1 1 150px;
+  max-width:220px;
+}
+
+/* ===== LEMBRETES ===== */
+#reminderModal .modal-content{
+  max-height:80vh;
+  overflow-y:auto;
+}
+
+.reminder-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:8px 0;
+  padding:8px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.reminder-delete{
+  cursor:pointer;
+  font-size:14px;
+  opacity:0.6;
+}
+
+.reminder-delete:hover{
+  opacity:1;
+}
+
+/* ===== FOTO PIN PREMIUM ===== */
+.pin-photo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:25px;
+
+  border:2px solid rgba(212,175,55,0.7);
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,0.6),
+    0 0 40px rgba(212,175,55,0.4);
+
+  animation:luxGlow 3s ease-in-out infinite;
+}
+
+@keyframes luxGlow{
+  0%,100%{
+    box-shadow:
+      0 0 20px rgba(212,175,55,0.6),
+      0 0 40px rgba(212,175,55,0.4);
+  }
+  50%{
+    box-shadow:
+      0 0 30px rgba(255,215,0,0.9),
+      0 0 60px rgba(255,215,0,0.5);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PIN LOCK -->
+<div id="pinLock">
+    <div class="modal-content" style="text-align:center">
+
+      <img src="sua-foto-v2.jpg" class="pin-photo">
+
+      <h2 class="pin-title">🔒 ACESSO RESTRITO</h2>
+      <input id="pinInput" type="password" maxlength="4" placeholder="••••">
+      <div style="margin-top:15px;">
+        <button class="btn-minimal" onclick="confirmPin()">Entrar</button>
+      </div>
+      <div style="margin-top:20px;font-size:12px;opacity:0.4;">
+        Carlos França
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<header class="top-bar hidden" id="mainApp">
+
+  <div>
+    <h1 class="app-title">CAPITAL 79</h1>
+    <div class="signature-tag">ULTRA WEALTH MANAGEMENT</div>
+  </div>
+
+  <div class="summary">
+
+    <div>
+      <div class="metric-label">Receita</div>
+      <input type="number" id="totalIncome"
+        placeholder="0"
+        oninput="updateTop(); persist();">
+    </div>
+
+    <div>
+      <div class="metric-label">Despesa (Mês Atual)</div>
+      <div class="metric-value" id="currentExpense">R$ 0,00</div>
+    </div>
+
+    <div>
+      <div class="metric-label">Resultado</div>
+      <div class="metric-value" id="balance">R$ 0,00</div>
+    </div>
+
+    <button class="btn-minimal" onclick="toggleTheme()">🌗</button>
+    <button class="btn-minimal" onclick="openModal()">＋ Lançamento</button>
+
+  </div>
+</header>
+
+<main id="monthsContainer" class="hidden"></main>
+
+<div class="footer-controls hidden" id="footerControls">
+
+  <button class="btn-minimal" onclick="toggleFiveYears()">+ Meses (5 anos)</button>
+  <button class="btn-minimal" onclick="exportData()">Exportar</button>
+  <button class="btn-minimal" onclick="triggerImport()">Importar</button>
+  <button class="btn-minimal" onclick="generateAnnualPDF()">Gerar PDF Anual</button>
+  <button class="btn-minimal" onclick="openReminderModal()">📒 Lembretes</button>
+<button class="btn-minimal" onclick="openRTModal()">RT</button>
+<button class="btn-minimal" onclick="logout()">
+  Sair
+</button>
+
+  <input type="file"
+         id="hiddenImport"
+         accept=".json"
+         onchange="importData(event)"
+         style="display:none;">
+</div>
+
+<!-- MODAL LANÇAMENTO (inalterado) -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Novo Lançamento</h2>
+    <input id="expenseValue" type="number" placeholder="Valor">
+    <select id="expenseType" onchange="handleType()">
+      <option value="vista">À vista</option>
+      <option value="parcelado">Parcelado</option>
+      <option value="recorrente">Recorrente</option>
+    </select>
+    <select id="expenseCard" onchange="handleCard()">
+  <option>Visa</option>
+  <option>Porto</option>
+  <option>Banese</option>
+  <option>Outro</option>
+  <option>Caixa</option>
+  <option>Master</option>
+  <option>Bradesco</option>
+  <option>Elo</option>
+  <option>Santander</option>
+  <option>Itaú</option>
+  <option>NuBank</option>
+  <option>Will</option>
+  
+</select>
+<input type="text" id="otherCard" class="hidden" placeholder="Digite o nome do cartão">
+    <select id="expenseInstallments" class="hidden" onchange="handleInstallments()">
+  <option value="1">1x</option>
+  <option value="2">2x</option>
+  <option value="3">3x</option>
+  <option value="4">4x</option>
+  <option value="5">5x</option>
+  <option value="6">6x</option>
+  <option value="7">7x</option>
+  <option value="8">8x</option>
+  <option value="9">9x</option>
+  <option value="10">10x</option>
+  <option value="11">11x</option>
+  <option value="12">12x</option>
+  <option value="outro">Outro</option>
+</select>
+
+<input 
+  id="customInstallments" 
+  type="number" 
+  class="hidden" 
+  placeholder="Qtd parcelas"
+  min="1">
+
+    <select id="expensePayer" onchange="handlePayer()">
+      <option>Carlos França</option>
+      <option>Outro</option>
+    </select>
+    <input id="otherPayer" class="hidden" placeholder="Nome">
+    <select id="expenseMonth">
+      <option>JAN</option><option>FEV</option><option>MAR</option>
+      <option>ABR</option><option>MAI</option><option>JUN</option>
+      <option>JUL</option><option>AGO</option><option>SET</option>
+      <option>OUT</option><option>NOV</option><option>DEZ</option>
+    </select>
+    <div style="margin-top:15px;">
+      <button class="btn-minimal" onclick="closeModal()">Cancelar</button>
+      <button class="btn-minimal" onclick="saveExpense()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LEMBRETES -->
+<div id="reminderModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>📒 Lembretes de Empréstimos</h2>
+
+    <input id="reminderName" placeholder="Nome">
+    <input id="reminderValue" type="number" placeholder="Valor">
+
+    <div style="margin-top:10px;">
+      <button class="btn-minimal" onclick="addReminder()">Adicionar</button>
+      <button class="btn-minimal" onclick="closeReminderModal()">Fechar</button>
+    </div>
+
+    <div id="reminderList" style="margin-top:15px;"></div>
+  </div>
+</div>
+
+<!-- MODAL RT -->
+<div id="rtModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Receita Total (RT)</h2>
+
+    <input id="rtInput" type="number" placeholder="Digite sua Receita Total">
+
+    <div style="margin-top:15px;">
+      <button class="btn-minimal" onclick="closeRTModal()">Cancelar</button>
+      <button class="btn-minimal" onclick="saveRT()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script src="styles.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+/* ===== LEMBRETES FUNCIONALIDADE ===== */
+let reminders = JSON.parse(localStorage.getItem("capital79_reminders") || "[]");
+
+function openReminderModal(){
+  document.getElementById("reminderModal").classList.remove("hidden");
+  renderReminders();
+}
+
+function closeReminderModal(){
+  document.getElementById("reminderModal").classList.add("hidden");
+}
+
+function addReminder(){
+  const name = document.getElementById("reminderName").value;
+  const value = parseFloat(document.getElementById("reminderValue").value);
+
+  if(!name || !value) return;
+
+  reminders.push({name,value});
+  localStorage.setItem("capital79_reminders",JSON.stringify(reminders));
+
+  document.getElementById("reminderName").value="";
+  document.getElementById("reminderValue").value="";
+  renderReminders();
+}
+
+function deleteReminder(index){
+  reminders.splice(index,1);
+  localStorage.setItem("capital79_reminders",JSON.stringify(reminders));
+  renderReminders();
+}
+
+function renderReminders(){
+  const list=document.getElementById("reminderList");
+  list.innerHTML="";
+  reminders.forEach((r,i)=>{
+    const div=document.createElement("div");
+    div.className="reminder-item";
+    div.innerHTML = `
+  <span>${r.name} — R$ ${r.value.toFixed(2)}</span>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <span 
+      onclick="sendWhatsApp('5579999849536',
+      'Olá, ${r.name}, o valor de R$ ${r.value.toFixed(2)} está pendente. Essa mensagem é automática por enquanto, mas logo será judicial se não for quitada.')"
+      style="cursor:pointer;color:#25D366;">
+      📲
+    </span>
+
+    <span 
+      class="reminder-delete"
+      onclick="deleteReminder(${i})">
+      🗑
+    </span>
+  </div>
+`;
+    list.appendChild(div);
+  });
+}
+
+// ===== WHATSAPP =====
+function sendWhatsApp(number, message){
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker registrado"))
+      .catch(err => console.log("Erro SW:", err));
+  });
+}
+</script>
+
+</body>
+</html>
