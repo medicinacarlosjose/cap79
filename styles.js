@@ -1,7 +1,9 @@
 const months=["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
 
 let data={};
-let showFiveYears=false;
+let showFutureFiveYears = false;
+let showPastFiveYears = false;
+let showPreviousMonth = false;
 const pin="7979";
 
 /* ================= PIN ================= */
@@ -137,9 +139,23 @@ function generateMonths(){
   const now = new Date();
 
   // MÊS SEGUINTE AO ATUAL
-  const startDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  let startOffset = 1; // padrão: próximo mês
+let totalMonths = 12;
 
-  let totalMonths = showFiveYears ? 60 : 12;
+if(showFutureFiveYears){
+  totalMonths = 60;
+}
+
+if(showPastFiveYears){
+  startOffset = -60;
+  totalMonths = 60;
+}
+
+if(showPreviousMonth){
+  startOffset = -1;
+}
+
+const startDate = new Date(now.getFullYear(), now.getMonth() + startOffset, 1);
 
   for(let i=0;i<totalMonths;i++){
 
@@ -273,8 +289,22 @@ function updateTop(){
 }
 
 /* ================= CONTROLES ================= */
-function toggleFiveYears(){
-  showFiveYears=!showFiveYears;
+function toggleFutureFiveYears(){
+  showFutureFiveYears = !showFutureFiveYears;
+  showPastFiveYears = false;
+  generateMonths();
+}
+
+function togglePastFiveYears(){
+  showPastFiveYears = !showPastFiveYears;
+  showFutureFiveYears = false;
+  generateMonths();
+}
+
+function togglePreviousMonth(){
+  showPreviousMonth = !showPreviousMonth;
+  showFutureFiveYears = false;
+  showPastFiveYears = false;
   generateMonths();
 }
 

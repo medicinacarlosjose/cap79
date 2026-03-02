@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>CAPITAL 79 — Ultra Wealth Management</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="/cap79/manifest.json"><link rel="stylesheet" href="app.css">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="app.css">
 
 <style>
 
@@ -265,7 +266,11 @@
 
 <div class="footer-controls hidden" id="footerControls">
 
-  <button class="btn-minimal" onclick="toggleFiveYears()">+ Meses (5 anos)</button>
+  <button class="btn-minimal" onclick="togglePastFiveYears()">- 5 anos</button>
+
+<button class="btn-minimal" onclick="toggleFutureFiveYears()">+ 5 anos</button>
+
+<button class="btn-minimal" onclick="togglePreviousMonth()">👁 Mês anterior</button>
   <button class="btn-minimal" onclick="exportData()">Exportar</button>
   <button class="btn-minimal" onclick="triggerImport()">Importar</button>
   <button class="btn-minimal" onclick="generateAnnualPDF()">Gerar PDF Anual</button>
