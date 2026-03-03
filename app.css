@@ -231,10 +231,11 @@ body.light .month-card{
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.95);
+  background:#000;   /* fundo totalmente sólido */
   display:flex;
   justify-content:center;
   align-items:center;
+  z-index:2000;
 }
 
 .modal.hidden{display:none;}
@@ -252,6 +253,13 @@ body.light .modal-content{
 
 .hidden{
   display:none !important;
+}
+
+body.modal-open #mainApp,
+body.modal-open #monthsContainer,
+body.modal-open #footerControls {
+  filter: blur(6px);
+  pointer-events: none;
 }
 
 /* ================= TEMAS PREMIUM ================= */
@@ -395,4 +403,26 @@ body.parisian::before{
       0 0 60px #0077ff,
       0 0 100px rgba(0,140,255,0.8);
   }
+}
+
+/* ===== FIX DEFINITIVO MODAIS ===== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* acima de tudo */
+}
+
+.modal-content {
+  position: relative;
+  z-index: 2001;
+}
+
+/* Garante que PIN não interfira depois de oculto */
+#pinLock.hidden {
+  display: none !important;
 }

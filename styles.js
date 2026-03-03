@@ -12,8 +12,7 @@ function confirmPin(){
 
     localStorage.setItem("capital79_auth","true");
 
-    document.getElementById("pinLock").style.display="none";
-    document.getElementById("mainApp").classList.remove("hidden");
+document.getElementById("pinLock").classList.add("hidden");    document.getElementById("mainApp").classList.remove("hidden");
     document.getElementById("monthsContainer").classList.remove("hidden");
     document.getElementById("footerControls").classList.remove("hidden");
 
@@ -49,8 +48,15 @@ function toggleTheme(){
 }
 
 /* ================= MODAL ================= */
-function openModal(){ modal.classList.remove("hidden"); }
-function closeModal(){ modal.classList.add("hidden"); }
+function openModal(){
+  document.body.classList.add("modal-open");
+  modal.classList.remove("hidden");
+}
+
+function closeModal(){
+  document.body.classList.remove("modal-open");
+  modal.classList.add("hidden");
+}
 
 /* ================= VISIBILIDADE ================= */
 function handleType(){
@@ -432,8 +438,7 @@ function importData(e){
   const isAuth = localStorage.getItem("capital79_auth");
 
   if(isAuth === "true"){
-    document.getElementById("pinLock").style.display="none";
-    document.getElementById("mainApp").classList.remove("hidden");
+document.getElementById("pinLock").classList.add("hidden");    document.getElementById("mainApp").classList.remove("hidden");
     document.getElementById("monthsContainer").classList.remove("hidden");
     document.getElementById("footerControls").classList.remove("hidden");
     generateMonths();
@@ -611,3 +616,7 @@ function logout(){
   location.reload();
 }
 
+function persist(){
+  localStorage.setItem("financeData", JSON.stringify(data));
+  localStorage.setItem("income", totalIncome.value);
+}
