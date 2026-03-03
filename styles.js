@@ -4,7 +4,7 @@ let data={};
 let showFutureFiveYears = false;
 let showPastFiveYears = false;
 let showPreviousMonth = false;
-const pin="7979";
+const pin="8888";
 
 /* ================= PIN ================= */
 function confirmPin(){
@@ -132,6 +132,12 @@ function toggleDetails(id, btn){
 
 /* ================= GERAR MESES ================= */
 function generateMonths(){
+const btn = document.getElementById("btnPreviousMonth");
+if(btn){
+  btn.innerText = showPreviousMonth
+    ? "📌 Desafixar mês anterior"
+    : "📌 Fixar mês anterior";
+}
 
   const container=document.getElementById("monthsContainer");
   container.innerHTML="";
@@ -153,6 +159,7 @@ if(showPastFiveYears){
 
 if(showPreviousMonth){
   startOffset = -1;
+  totalMonths = 13; 
 }
 
 const startDate = new Date(now.getFullYear(), now.getMonth() + startOffset, 1);
@@ -188,8 +195,31 @@ const startDate = new Date(now.getFullYear(), now.getMonth() + startOffset, 1);
     const card=document.createElement("div");
     card.className="month-card";
 
+const savedColors = JSON.parse(
+  localStorage.getItem("capital79_cardColors") || "{}"
+);
+
+if(savedColors[key]){
+  card.style.setProperty(
+    "--neon-color",
+    savedColors[key]
+  );
+}
+
     card.innerHTML=`
-      <h3>${months[monthIndex]} ${year.toString().slice(2)}</h3>
+
+  <div class="month-header">
+    <h3>${months[monthIndex]} ${year.toString().slice(2)}</h3>
+
+    <span 
+      class="color-picker-icon"
+      onclick="cycleCardColor('${key}')"
+      title="Alterar cor da borda">
+      🎨
+    </span>
+  </div>
+
+  <div><strong>Total:</strong> R$ ${total.toFixed(2)}</div>
       <div><strong>Total:</strong> R$ ${total.toFixed(2)}</div>
       <hr style="opacity:0.08;margin:12px 0">
       ${renderCategory("À Vista", totalVista, vista, `vista-${key}`, key)}
@@ -302,9 +332,18 @@ function togglePastFiveYears(){
 }
 
 function togglePreviousMonth(){
+
   showPreviousMonth = !showPreviousMonth;
+
   showFutureFiveYears = false;
   showPastFiveYears = false;
+
+  // 🔒 Persistência real
+  localStorage.setItem(
+    "capital79_previousMonthPinned",
+    showPreviousMonth
+  );
+
   generateMonths();
 }
 
@@ -316,42 +355,67 @@ function clearMonth(key){
   }
 }
 
-function exportData(){
-  const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="capital79.json";
-  a.click();
-}
-
 function triggerImport(){
   document.getElementById("hiddenImport").click();
 }
 
 function importData(e){
-  const file=e.target.files[0];
-  const reader=new FileReader();
-  reader.onload=()=>{
-    data=JSON.parse(reader.result);
+
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+
+    const imported = JSON.parse(reader.result);
+
+    if(imported.financeData){
+
+      data = imported.financeData;
+      totalIncome.value = imported.income || "";
+
+      localStorage.setItem(
+        "capital79_reminders",
+        JSON.stringify(imported.reminders || [])
+      );
+
+      localStorage.setItem(
+        "capital79_rt",
+        imported.rt || ""
+      );
+
+      localStorage.setItem(
+        "theme",
+        imported.theme || ""
+      );
+
+      // 🔒 Restaurar fixação
+      showPreviousMonth = imported.previousMonthPinned || false;
+
+      localStorage.setItem(
+        "capital79_previousMonthPinned",
+        showPreviousMonth
+      );
+
+    } else {
+      // Backup antigo
+      data = imported;
+    }
+
     persist();
     generateMonths();
   };
-  reader.readAsText(file);
-}
 
-function persist(){
-  localStorage.setItem("financeData",JSON.stringify(data));
-  localStorage.setItem("income",totalIncome.value);
+  reader.readAsText(file);
 }
 
 /* ================= INIT ================= */
 (function init(){
 
-  const d=localStorage.getItem("financeData");
-  if(d) data=JSON.parse(d);
+  const d = localStorage.getItem("financeData");
+  if(d) data = JSON.parse(d);
 
-  const inc=localStorage.getItem("income");
-  if(inc) totalIncome.value=inc;
+  const inc = localStorage.getItem("income");
+  if(inc) totalIncome.value = inc;
 
   const savedTheme = localStorage.getItem("theme");
   if(savedTheme){
@@ -359,7 +423,12 @@ function persist(){
     currentThemeIndex = themes.indexOf(savedTheme);
   }
 
-  // 👇 ADICIONE AQUI
+  // 🔒 Restaurar mês anterior fixado
+  const pinned = localStorage.getItem("capital79_previousMonthPinned");
+  if(pinned === "true"){
+    showPreviousMonth = true;
+  }
+
   const isAuth = localStorage.getItem("capital79_auth");
 
   if(isAuth === "true"){
@@ -438,10 +507,24 @@ async function generateAnnualPDF(){
 }
 
 function exportData(){
-  const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+
+  const backup = {
+    financeData: data,
+    income: totalIncome.value,
+    reminders: JSON.parse(localStorage.getItem("capital79_reminders") || "[]"),
+    rt: localStorage.getItem("capital79_rt") || "",
+    theme: localStorage.getItem("theme") || "",
+    previousMonthPinned: showPreviousMonth
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(backup, null, 2)],
+    {type:"application/json"}
+  );
+
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="capital79.json";
+  a.download="capital79-backup-completo.json";
   a.click();
 }
 
@@ -455,6 +538,33 @@ function deleteExpense(key, index){
   }
 
   persist();
+  generateMonths();
+}
+
+const neonColors = [
+  "#00ff8c", // verde
+  "#00f0ff", // azul
+  "#ff00c8", // pink
+  "#ffd700", // gold
+  "#ff4d4d"  // vermelho
+];
+
+function cycleCardColor(key){
+
+  const saved = JSON.parse(
+    localStorage.getItem("capital79_cardColors") || "{}"
+  );
+
+  const currentIndex = neonColors.indexOf(saved[key]);
+  const nextIndex = (currentIndex + 1) % neonColors.length;
+
+  saved[key] = neonColors[nextIndex];
+
+  localStorage.setItem(
+    "capital79_cardColors",
+    JSON.stringify(saved)
+  );
+
   generateMonths();
 }
 

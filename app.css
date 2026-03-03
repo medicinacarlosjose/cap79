@@ -150,11 +150,57 @@ main{
 }
 
 .month-card{
+  position:relative;
   background:rgba(0,0,0,0.92);
-  padding:18px; /* reduzido */
-  border-radius:16px; /* reduzido */
-  border:1px solid rgba(212,175,55,0.15);
+  padding:18px;
+  border-radius:16px;
+
+  --neon-color:#00ff8c;
+
+  border:1px solid var(--neon-color);
+
+  box-shadow:
+    0 0 6px var(--neon-color);
+
+  overflow:hidden;
   transition:0.4s;
+}
+
+/* BORDA NEON ANIMADA */
+.month-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:18px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,140,0.8),
+    transparent
+  );
+
+  background-size:200% 100%;
+
+  animation:neonBorderRun 3s linear infinite;
+
+  z-index:0;
+  pointer-events:none;
+}
+
+.month-card > *{
+  position:relative;
+  z-index:1;
+}
+
+/* ANIMAÇÃO */
+@keyframes neonBorderRun{
+  0%{
+    background-position:-200% 0;
+  }
+  100%{
+    background-position:200% 0;
+  }
 }
 
 body.light .month-card{
@@ -228,9 +274,7 @@ body.bordeaux{
 
 body.bordeaux .month-card{
   background:linear-gradient(180deg,#1a0008,#0d0004);
-  border:1px solid rgba(128,0,32,0.6);
-  box-shadow:0 0 20px rgba(128,0,32,0.2);
-}
+  }
 
 body.execemerald{
   background: radial-gradient(circle at top, #062d20, #000000 70%);
