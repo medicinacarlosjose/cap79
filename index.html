@@ -257,6 +257,7 @@
     </div>
 
     <button class="btn-minimal" onclick="toggleTheme()">🌗</button>
+<button class="btn-minimal" onclick="toggleSound()" id="soundBtn">🔊</button>
     <button class="btn-minimal" onclick="openModal()">＋ Lançamento</button>
 
   </div>
@@ -471,6 +472,51 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<script>
+/* ================= MÚSICA AUTOMÁTICA ================= */
 
+const playlist = [
+  "berlim.mp3",
+  "coracao-valente.mp3",
+  "falcao-o-campeao-dos-campeoes.mp3",
+  "karate-kid.mp3",
+  "the-power-of-love.mp3",
+  "titanic.mp3"
+];
+
+let audio;
+let isMuted = false;
+
+function playRandomMusic() {
+
+  const randomIndex = Math.floor(Math.random() * playlist.length);
+  const randomTrack = playlist[randomIndex];
+
+  audio = new Audio(randomTrack);
+  audio.loop = true;
+  audio.volume = 0.4;
+
+  // tentativa automática
+  audio.play().catch(() => {
+    // fallback caso o navegador bloqueie autoplay
+    document.addEventListener("click", () => {
+      audio.play();
+    }, { once: true });
+  });
+}
+
+function toggleSound() {
+  if (!audio) return;
+
+  isMuted = !isMuted;
+  audio.muted = isMuted;
+
+  document.getElementById("soundBtn").innerText = isMuted ? "🔇" : "🔊";
+}
+
+window.addEventListener("load", () => {
+  playRandomMusic();
+});
+</script>
 </body>
 </html>

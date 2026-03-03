@@ -1,4 +1,4 @@
-const CACHE_NAME = "capital79-v9";
+const CACHE_NAME = "capital79-v10";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -6,7 +6,15 @@ const urlsToCache = [
   "./styles.js",
   "sua-foto-v2.jpg",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+
+  // músicas
+  "./berlim.mp3",
+  "./coracao-valente.mp3",
+  "./falcao-o-campeao-dos-campeoes.mp3",
+  "./karate-kid.mp3",
+  "./the-power-of-love.mp3",
+  "./titanic.mp3"
 ];
 
 self.addEventListener("install", event => {
