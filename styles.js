@@ -5,6 +5,17 @@ let showFutureFiveYears = false;
 let showPastFiveYears = false;
 let showPreviousMonth = false;
 const pin="8888";
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("pinInput");
+
+  if(input){
+    input.addEventListener("input", () => {
+      if(input.value === pin){
+        confirmPin();
+      }
+    });
+  }
+});
 
 /* ================= PIN ================= */
 function confirmPin(){
@@ -225,7 +236,6 @@ if(savedColors[key]){
     </span>
   </div>
 
-  <div><strong>Total:</strong> R$ ${total.toFixed(2)}</div>
       <div><strong>Total:</strong> R$ ${total.toFixed(2)}</div>
       <hr style="opacity:0.08;margin:12px 0">
       ${renderCategory("À Vista", totalVista, vista, `vista-${key}`, key)}
